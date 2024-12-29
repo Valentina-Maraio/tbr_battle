@@ -1,21 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.w-48 {
+  width: 12rem; /* Adjust if needed */
+}
+
+.bg-gray-800 {
+  background-color: #1a202c;
+}
+
+.text-white {
+  color: white;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.hover\\:underline:hover {
+  text-decoration: underline;
 }

@@ -1,9 +1,9 @@
 export default function AboutPage() {
     return (
-        <main>
-            <h1>About Us</h1>
-            <p>This is the About page of our TBR Battle Dashboard</p>
-            <a href="/">Go to Home Page</a>
-        </main>
-    )
-}
+      <div>
+        <h1 className="text-2xl font-bold">About Us</h1>
+        <p>This is the About page of our TBR Battle Dashboard.</p>
+      </div>
+    );
+  }
+  
