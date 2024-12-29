@@ -10,10 +10,11 @@ body {
   background-color: #f8f9fa;
 }
 
-html,
-body {
+html, body {
   height: 100%;
+  overflow: auto; 
 }
+
 
 .flex {
   display: flex;
