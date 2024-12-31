@@ -180,7 +180,7 @@ export default function Home() {
         </div>
 
         {/* Total Books */}
-        <div className="bg-gray-200 p-6 rounded-lg shadow-lg flex flex-col items-center justify-center relative h-64">
+        <div className="bg-gray-200 p-6 rounded-lg shadow-lg flex flex-col items-center justify-center relative">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-purple-600 rounded-t-lg"></div>
           <h2 className="font-semibold text-lg mb-4">Total Books</h2>
           <p className="text-4xl font-extrabold text-blue-600">{books.length}</p>
@@ -188,7 +188,7 @@ export default function Home() {
         </div>
 
         {/* Chart occupying two cells */}
-        <div className="col-span-1 md:col-span-2 row-span-2 bg-gray-200 p-4 rounded-lg shadow-lg">
+        <div className="col-span-1 md:col-span-2 row-span-2 bg-gray-200 p-4   rounded-lg shadow-lg">
           {chartData && (
             <>
               <h2 className="font-semibold text-center mb-4">Books Added Per Year</h2>
