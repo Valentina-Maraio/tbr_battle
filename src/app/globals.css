@@ -3,17 +3,20 @@
 @tailwind utilities;
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
+html,
 body {
+  scroll-behavior: smooth;
   margin: 0;
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #f8f9fa;
+  padding: 0;
+  overflow: hidden;
 }
 
-html, body {
-  height: 100%;
-  overflow: auto; 
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
+
 
 
 .flex {
