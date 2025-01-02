@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import HomePage from "../homepage/page";
 
 // Registering Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -138,73 +139,75 @@ export default function Home() {
   };
 
   return (
-    <div className="overflow-hidden">
-      <h1 className="text-2xl font-bold text-center md:text-left">
-        Welcome to the TBR Battle Dashboard!
-      </h1>
-      <p className="text-center md:text-left">Use the menu on the left to navigate.</p>
+    <HomePage>
+      <div className="overflow-hidden">
+        <h1 className="text-2xl font-bold text-center md:text-left">
+          Welcome to the TBR Battle Dashboard!
+        </h1>
+        <p className="text-center md:text-left">Use the menu on the left to navigate.</p>
 
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-4 mt-8">
-        {/* Reading Goal Section */}
-        <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
-          <h2 className="font-semibold">Set Your Reading Goal</h2>
-          <div className="flex flex-col space-y-2">
-            <input
-              type="number"
-              className="p-2 border rounded"
-              placeholder="Enter your reading goal for the year"
-              value={readingGoal}
-              onChange={handleGoalChange}
-            />
-            <button
-              className="bg-blue-500 text-white p-2 rounded"
-              onClick={() => { }} // Goal is updated automatically
-            >
-              Set Goal
-            </button>
-          </div>
-          <div className="bg-gray-200 p-3 mt-6">
-            <div className="text-xl font-bold text-center">
-              {readingGoal
-                ? `Your reading goal for the year is: ${readingGoal}`
-                : "Please set your reading goal."}
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-4 mt-8">
+          {/* Reading Goal Section */}
+          <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
+            <h2 className="font-semibold">Set Your Reading Goal</h2>
+            <div className="flex flex-col space-y-2">
+              <input
+                type="number"
+                className="p-2 border rounded"
+                placeholder="Enter your reading goal for the year"
+                value={readingGoal}
+                onChange={handleGoalChange}
+              />
+              <button
+                className="bg-blue-500 text-white p-2 rounded"
+                onClick={() => { }} // Goal is updated automatically
+              >
+                Set Goal
+              </button>
+            </div>
+            <div className="bg-gray-200 p-3 mt-6">
+              <div className="text-xl font-bold text-center">
+                {readingGoal
+                  ? `Your reading goal for the year is: ${readingGoal}`
+                  : "Please set your reading goal."}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Additional Content */}
-        <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
-          <h2 className="font-semibold">Additional Content</h2>
-          <p>Some additional content or info.</p>
-        </div>
+          {/* Additional Content */}
+          <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
+            <h2 className="font-semibold">Additional Content</h2>
+            <p>Some additional content or info.</p>
+          </div>
 
-        {/* Total Books */}
-        <div className="bg-gray-200 p-6 rounded-lg shadow-lg flex flex-col items-center justify-center relative">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-purple-600 rounded-t-lg"></div>
-          <h2 className="font-semibold text-lg mb-4">Total Books</h2>
-          <p className="text-4xl font-extrabold text-blue-600">{books.length}</p>
-          <p className="text-sm mt-2 text-gray-500">Total books in your collection</p>
-        </div>
+          {/* Total Books */}
+          <div className="bg-gray-200 p-6 rounded-lg shadow-lg flex flex-col items-center justify-center relative">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-purple-600 rounded-t-lg"></div>
+            <h2 className="font-semibold text-lg mb-4">Total Books</h2>
+            <p className="text-4xl font-extrabold text-blue-600">{books.length}</p>
+            <p className="text-sm mt-2 text-gray-500">Total books in your collection</p>
+          </div>
 
-        {/* Chart occupying two cells */}
-        <div className="col-span-1 md:col-span-2 row-span-2 bg-gray-200 p-4   rounded-lg shadow-lg">
-          {chartData && (
-            <>
-              <h2 className="font-semibold text-center mb-4">Books Added Per Year</h2>
-              <Bar data={chartData} />
-            </>
-          )}
-        </div>
+          {/* Chart occupying two cells */}
+          <div className="col-span-1 md:col-span-2 row-span-2 bg-gray-200 p-4   rounded-lg shadow-lg">
+            {chartData && (
+              <>
+                <h2 className="font-semibold text-center mb-4">Books Added Per Year</h2>
+                <Bar data={chartData} />
+              </>
+            )}
+          </div>
 
-        {/* Top 10 Most Read/Added Authors */}
-        <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-          <h2 className="font-semibold text-lg mb-4 text-center md:text-left">
-            Top 10 Most Read/Added Authors
-          </h2>
-          {authorChartData && <Bar data={authorChartData} />}
+          {/* Top 10 Most Read/Added Authors */}
+          <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
+            <h2 className="font-semibold text-lg mb-4 text-center md:text-left">
+              Top 10 Most Read/Added Authors
+            </h2>
+            {authorChartData && <Bar data={authorChartData} />}
+          </div>
         </div>
       </div>
-    </div>
+    </HomePage>
   );
 }
