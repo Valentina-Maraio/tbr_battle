@@ -79,3 +79,8 @@ body {
 .hover\\:underline:hover {
   text-decoration: underline;
 }
+
+
+input::placeholder {
+  color: #6b7280;
+}

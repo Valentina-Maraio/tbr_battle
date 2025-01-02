@@ -149,7 +149,7 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
               {/* Main Content */}
               <div className="flex-1 flex flex-col">
                 {/* Top Bar */}
-                <div style={{ backgroundColor: 'var(--secondary)', color: 'var(--background)' }} className="w-full p-4 flex items-center justify-between fixed top-0 z-10">
+                <div className="w-full p-4 flex items-center justify-between fixed top-0 z-10" style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}>
                   {/* Mobile Menu Button */}
                   <button
                     className="lg:hidden hover:opacity-80"
@@ -157,17 +157,6 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
                   >
                     <i className="fas fa-bars"></i>
                   </button>
-                  <div className="hidden lg:flex space-x-2">
-                    <input
-                      type="text"
-                      placeholder="Search..."
-                      style={{ backgroundColor: 'var(--background)', color: 'var(--text)' }}
-                      className="px-3 py-1 rounded border"
-                    />
-                    <button style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }} className="px-4 py-1 rounded hover:opacity-90">
-                      Search
-                    </button>
-                  </div>
                 </div>
 
                 {/* Content Area */}
