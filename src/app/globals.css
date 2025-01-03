@@ -4,30 +4,27 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
 :root {
-  /* Light Theme - Warm Neutral */
-  --background: #FFF5E6;      /* Soft cream background */
-  --text: #3C2A21;            /* Deep warm brown */
-  --primary: #D2691E;         /* Warm copper/terra cotta */
-  --secondary: #8B4513;       /* Saddle brown */
-  --accent: #CD853F;          /* Peru - soft orange-brown */
+  --background: #FCF8F3;      /* Soft, off-white */
+  --text: #4B4B4B;            /* Cool grey text */
+  --primary: #D7C7A3;         /* Warm taupe */
+  --secondary: #9D9C9C;       /* Light grey-brown */
+  --accent: #D6A2A1;          /* Soft coral */
 }
 
 .theme-dark {
-  /* Dark Theme - Warm Charcoal */
-  --background: #2C2C2C;      /* Warm charcoal gray */
-  --text: #F5DEB3;            /* Wheat color for soft contrast */
-  --primary: #8B4513;         /* Saddle brown */
-  --secondary: #A0522D;       /* Sienna */
-  --accent: #CD853F;          /* Peru - soft orange-brown */
+  --background: #404040;      /* Dark grey background */
+  --text:rgb(108, 99, 79);            /* Same as border color - warm taupe */
+  --primary: #D7C7A3;         /* Warm taupe */
+  --secondary: #9D9C9C;       /* Light grey-brown */
+  --accent: #D6A2A1;          /* Soft coral */
 }
 
 .theme-blue {
-  /* Blue Theme - Warm Ocean */
-  --background: #E6F2F7;      /* Soft, warm light blue */
-  --text: #1C4E6C;            /* Deep ocean blue */
-  --primary: #4A7C59;         /* Muted sage green */
-  --secondary: #6B8E9F;       /* Soft slate blue */
-  --accent: #D2691E;          /* Terra cotta accent */
+  --background: #F1F8FF;      /* Soft pale blue */
+  --text: #3C3C3C;            /* Dark grey text */
+  --primary: #9C9A9A;         /* Light grey-taupe */
+  --secondary: #C8C7C7;       /* Soft grey */
+  --accent: #D6A2A1;          /* Soft coral */
 }
 
 html,
