@@ -33,7 +33,7 @@ export const handler = NextAuth({
 
 async function verifyUser(email, password) {
   // Replace this with your real authentication logic
-  if (email === "user@example.com" && password === "password") {
+  if (email === "user@example.com" && password === "yourtbr") {
     return { id: 1, email };
   }
   return null;

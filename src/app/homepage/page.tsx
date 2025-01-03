@@ -14,7 +14,7 @@ const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void
   };
 
   return (
-    <div style={{ backgroundColor: 'var(--background)', color: 'var(--text)' }} className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
+    <div style={{ color: 'var(--text)' }} className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
       <div style={{ backgroundColor: 'var(--background)', color: 'var(--text)', boxShadow: '0 4px 6px var(--secondary)' }} className="p-6 rounded w-80">
         <h2 className="text-lg font-bold mb-4">User Information</h2>
         <p><strong>Name:</strong> {user.name}</p>
@@ -49,7 +49,7 @@ const ThemeSelector = () => {
     >
       <option value="light">Light</option>
       <option value="dark">Dark</option>
-      <option value="blue">Blue</option>
+      <option value="middle">Middle</option>
     </select>
   );
 };

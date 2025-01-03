@@ -22,6 +22,7 @@ export default function SignInPage() {
     if (result?.error) {
       setError("Invalid email or password.");
     } else {
+      localStorage.setItem("justLoggedIn", "true");
       router.push("/dashboard"); // Redirect to the protected route
     }
   };
