@@ -1,5 +1,6 @@
 "use client";
 
+import { franc } from "franc-min";
 import { useEffect, useState } from "react";
 import HomePage from "../homepage/page";
 
@@ -11,6 +12,7 @@ export default function ReadingsPage() {
   const [displayedBooks, setDisplayedBooks] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [language, setLanguage] = useState<string>("");
 
   useEffect(() => {
     async function loadBooks() {
@@ -26,10 +28,20 @@ export default function ReadingsPage() {
     loadBooks();
   }, []);
 
+  // Handle language detection on search query change
+  useEffect(() => {
+    if (searchQuery) {
+      const detectedLanguage = franc(searchQuery);
+      setLanguage(detectedLanguage);
+    }
+  }, [searchQuery]);
+
+  // Filter books based on search query and detected language
   const filteredBooks = books.filter(
     (book) =>
-      book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.Author.toLowerCase().includes(searchQuery.toLowerCase())
+      (book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.Author.toLowerCase().includes(searchQuery.toLowerCase())) &&
+      (language ? book.Language === language : true)
   );
 
   const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_BATCH);
@@ -74,6 +86,15 @@ export default function ReadingsPage() {
           </div>
         </div>
 
+        {/* Language Display */}
+        {language && (
+          <div className="text-center mb-4">
+            <span className="font-medium text-lg text-gray-700">
+              Detected Language: {language}
+            </span>
+          </div>
+        )}
+
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full max-w-4xl mx-auto border-collapse border border-gray-200">
@@ -83,6 +104,7 @@ export default function ReadingsPage() {
                 <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Author</th>
                 <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Date Added</th>
                 <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Status</th>
+                <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Detected Language</th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +119,9 @@ export default function ReadingsPage() {
                         }`}
                     >
                       {parseInt(book.Read_Count) > 0 ? "Read" : "Not Read"}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2 min-h-[48px]">
+                      {franc(book.Title)} 
                     </td>
                   </tr>
                 ))
@@ -119,8 +144,8 @@ export default function ReadingsPage() {
           <div className="flex justify-between items-center mt-6 max-w-4xl mx-auto">
             <button
               className={`px-4 py-2 rounded-md ${currentPage > 1
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               disabled={currentPage <= 1}
               onClick={() => handlePageChange(currentPage - 1)}
@@ -133,8 +158,8 @@ export default function ReadingsPage() {
             </p>
             <button
               className={`px-4 py-2 rounded-md ${hasMore
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               disabled={!hasMore}
               onClick={() => handlePageChange(currentPage + 1)}

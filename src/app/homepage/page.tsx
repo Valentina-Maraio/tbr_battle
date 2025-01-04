@@ -7,18 +7,22 @@ import { signOut } from 'next-auth/react';
 import ProtectedRoute from '../protectRoute';
 import { ThemeProvider, useTheme } from '../ThemeContext';
 
-const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void; user: { name: string; surname: string; email: string } }) => {
-  if (!isOpen) return null;
+const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void; user: { name: string; surname: string; email: string } | null }) => {
+  if (!isOpen || !user) return null;
+
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/" });
   };
 
   return (
-    <div style={{ color: 'var(--text)' }} className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+      style={{ backdropFilter: 'blur(5px)' }} // Optional: Adds blur effect to the background
+    >
       <div style={{ backgroundColor: 'var(--background)', color: 'var(--text)', boxShadow: '0 4px 6px var(--secondary)' }} className="p-6 rounded w-80">
         <h2 className="text-lg font-bold mb-4">User Information</h2>
-        <p><strong>Name:</strong> {user.name}</p>
-        <p><strong>Surname:</strong> {user.surname}</p>
+        <p><strong>Name:</strong> {user.name || 'N/A'}</p>
+        <p><strong>Surname:</strong> {user.surname || 'N/A'}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <button
           style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}
@@ -31,7 +35,9 @@ const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void
           onClick={handleLogout}
           style={{ backgroundColor: 'var(--accent)', color: 'var(--background)' }}
           className="ml-2 px-4 py-2 rounded hover:opacity-90 focus:outline-none focus:ring-2"
-        >Logout</button>
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
@@ -43,7 +49,7 @@ const ThemeSelector = () => {
   return (
     <select
       value={theme}
-      onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'blue')}
+      onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'middle')}
       style={{ backgroundColor: 'var(--secondary)', color: 'var(--background)' }}
       className="p-2 rounded"
     >
