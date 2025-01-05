@@ -9,7 +9,6 @@ import '../globals.css';
 
 export default function Dashboard() {
   const [books, setBooks] = useState<any[]>([]);
-  const [readingGoal, setReadingGoal] = useState<number | string>('');
 
   // Load the books data
   useEffect(() => {
@@ -25,25 +24,6 @@ export default function Dashboard() {
     loadBooks();
   }, []);
 
-  // Load the reading goal from localStorage
-  useEffect(() => {
-    const savedGoal = localStorage.getItem("readingGoal");
-    if (savedGoal) {
-      setReadingGoal(savedGoal);
-    }
-  }, []);
-
-  // Save the reading goal to localStorage whenever it changes
-  useEffect(() => {
-    if (readingGoal !== '') {
-      localStorage.setItem("readingGoal", String(readingGoal));
-    }
-  }, [readingGoal]);
-
-  // Handle the change in the reading goal input
-  const handleGoalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setReadingGoal(event.target.value);
-  };
 
   return (
     <HomePage>
@@ -55,71 +35,34 @@ export default function Dashboard() {
         </div>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-4 mt-8">
-          {/* Reading Goal Section */}
-          <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
-            <h2 className="font-semibold">Set Your Reading Goal</h2>
-            <div className="flex flex-col space-y-2">
-              <input
-                type="number"
-                className="p-2 border rounded"
-                placeholder="Enter your reading goal for the year"
-                value={readingGoal}
-                onChange={handleGoalChange}
-              />
-              <button
-                style={{
-                  color: 'var(--text)',               // Keep the text color
-                  padding: '10px 20px',
-                  border: '2px solid var(--accent)',  // Use the accent color for the border
-                  borderRadius: '5px',
-                }}
-                className="p-2 rounded"
-                onClick={() => { }} // Goal is updated automatically
-              >
-                Set Goal
-              </button>
-            </div>
-            <div className="bg-gray-200 p-3 mt-6">
-              <div className="text-xl font-bold text-center">
-                {readingGoal
-                  ? `Your reading goal for the year is: ${readingGoal}`
-                  : "Please set your reading goal."}
-              </div>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 mt-8">
 
-          {/* Total Books */}
-          <div className="bg-gray-200 p-6 rounded-lg shadow-lg flex flex-col items-center justify-center relative">
-            <h2 className="font-semibold text-lg mb-4">Total Books</h2>
-            <p className="text-4xl font-extrabold text-blue-600"
-              style={{
-                color: 'var(--text)',
-                padding: '10px 20px',
-                border: 'none',
-                borderRadius: '5px',
-              }}
-            >{books.length}</p>
-            <p className="text-sm mt-2 text-gray-500">Total books in your collection</p>
+          {/* Books by Publisher */}
+          <div className="bg-gray-200 p-6 rounded-lg row-span-1 shadow-lg flex flex-col items-center justify-center relative">
+            <h2 className="font-semibold text-center mb-4">Books by Publisher</h2>
+            <BooksByPublisherChart books={books} />
+            <p className="mt-4 text-center text-sm text-gray-600">
+              This chart visualizes the distribution of books across different publishers in the dataset. By showing the number of books published by each publisher, it provides insights into the variety and reach of the publishers represented. This can be helpful for identifying dominant publishers and understanding the diversity of sources in your library or reading collection.
+            </p>
           </div>
 
           {/* Top 10 Most Read/Added Authors */}
-          <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
+          <div className="bg-gray-200 p-6 rounded-lg row-span-1 col-span-2 shadow-lg">
             <h2 className="font-semibold text-lg mb-4 text-center md:text-left">
               Top 10 Most Read/Added Authors
             </h2>
             <TopAuthorsChart books={books} />
+            <p className="mt-4 text-center text-sm text-gray-600">
+              The "Top 10 Most Read/Added Authors" chart highlights the most popular authors within the dataset. It tracks the number of times their books were read or added, giving an indication of which authors have captured the most attention from the audience. This can be useful for tracking reading trends, discovering emerging authors, or simply keeping tabs on which authors are most frequently selected.
+            </p>
           </div>
 
           {/* Chart occupying two cells */}
-          <div className="col-span-1 md:col-span-3 row-span-2 bg-gray-200 p-4   rounded-lg shadow-lg">
+          <div className="col-span-1 md:col-span-3 row-span-1 bg-gray-200 p-4 rounded-lg shadow-lg">
             <BooksPerYearChart books={books} />
-          </div>
-
-          {/* Books by Publisher */}
-          <div className="col-span-1 md:col-span-1 row-span-1 bg-gray-200 p-4 rounded-lg shadow-lg">
-            <h2 className="font-semibold text-center mb-4">Books by Publisher</h2>
-            <BooksByPublisherChart books={books} />
+            <p className="mt-4 text-center text-sm text-gray-600">
+              This chart provides a timeline of book publications over the years, showing how the number of books published has evolved over time. It helps to highlight trends in the publishing industry, such as periods of growth or decline, and can reveal historical patterns in the dataset. Analyzing the number of books published per year can also provide context for understanding shifts in genres, author activity, or the impact of various global events on publishing.
+            </p>
           </div>
         </div>
       </div>

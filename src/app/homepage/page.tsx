@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import ProtectedRoute from '../protectRoute';
-import { ThemeProvider, useTheme } from '../ThemeContext';
+import { useTheme } from '../ThemeContext';
 
 const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void; user: { name: string; surname: string; email: string } | null }) => {
   if (!isOpen || !user) return null;
@@ -78,11 +78,8 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-    <ThemeProvider>
       <ProtectedRoute>
-        <html lang="en">
-          <body style={{ backgroundColor: 'var(--background)', color: 'var(--text)' }}>
-            <div className="flex min-h-screen">
+            <div className="flex min-h-screen" style={{ backgroundColor: 'var(--background)', color: 'var(--text)' }}>
               {/* Sidebar */}
               <nav
                 style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}
@@ -180,9 +177,6 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
 
             {/* Modal */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={user} />
-          </body>
-        </html>
       </ProtectedRoute>
-    </ThemeProvider>
   );
 }

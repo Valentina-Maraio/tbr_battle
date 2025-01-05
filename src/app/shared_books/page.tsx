@@ -1,11 +1,12 @@
 "use client";
 
+import { v4 as uuidv4 } from 'uuid';
 import HomePage from "../homepage/page";
 import { useState, useEffect } from "react";
 import '../globals.css'
 
 type ShareABook = {
-  id: number;
+  id: string,
   title: string;
   author: string;
   completed: boolean;
@@ -20,9 +21,11 @@ export default function SharedPage() {
 
   // Load books from localStorage when the component mounts
   useEffect(() => {
-    const storedBooks = localStorage.getItem("sharedBooks");
-    if (storedBooks) {
-      setShared(JSON.parse(storedBooks));
+    if (typeof window !== "undefined") {
+      const storedBooks = localStorage.getItem("sharedBooks");
+      if (storedBooks) {
+        setShared(JSON.parse(storedBooks));
+      }
     }
   }, []);
 
@@ -36,11 +39,11 @@ export default function SharedPage() {
   const addASharedBook = () => {
     if (input.trim() && inputAuthor.trim() && sharedWith.trim()) {
       const newBook: ShareABook = {
-        id: Date.now(),
+        id: uuidv4(), // Correctly generate a unique ID
         title: input.trim(),
         author: inputAuthor.trim(),
         completed: false,
-        sharedWith: sharedWith.trim(), // Store the person it was shared with
+        sharedWith: sharedWith.trim(),
       };
       setShared((prev) => [...prev, newBook]);
       setInput("");
@@ -49,7 +52,7 @@ export default function SharedPage() {
     }
   };
 
-  const deleteBook = (id: number) => {
+  const deleteBook = (id: string) => {
     setShared((prev) => prev.filter((share) => share.id !== id));
   };
 
@@ -59,7 +62,6 @@ export default function SharedPage() {
         {/* Left Section: Form to Add a Book */}
         <div className="lg:w-1/3 space-y-4">
           <h1 className="text-3xl font-semibold text-center text-var(--text) mb-6">Share a Book</h1>
-          <p className="text-center text-var(--secondary) mb-6">Add a book and share it with your friends</p>
           <div className="space-y-4">
             {/* Title Input */}
             <div>
@@ -119,9 +121,7 @@ export default function SharedPage() {
         <div className="lg:w-2/3">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-4xl mx-autoborder border-var(--secondary) p-4 bg-var(--background)">
             {shared.length === 0 ? (
-              <p className="col-span-2 text-center text-var(--secondary)">
-                Add books to see them here!
-              </p>
+              <p className="text-center text-var(--secondary) mb-6">Add a book and share it with your friends</p>
             ) : (
               shared.map((book) => (
                 <div
@@ -137,10 +137,10 @@ export default function SharedPage() {
                   {/* Delete Button: Positioned in the top-right corner */}
                   <button
                     onClick={() => deleteBook(book.id)}
-                    className="absolute top-2 right-2 text-2xl font-bold hover:text-gray-300"
+                    className="absolute top-2 right-2 text-xl font-bold hover:text-gray-300"
                     style={{ color: 'var(--accent)' }}
                   >
-                    X
+                    x
                   </button>
 
                   {/* Shared With Name: Initially hidden, appears on hover */}
