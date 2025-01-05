@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import ProtectedRoute from '../protectRoute';
-import { useTheme } from '../ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void; user: { name: string; surname: string; email: string } | null }) => {
   if (!isOpen || !user) return null;
