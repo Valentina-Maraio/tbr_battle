@@ -115,13 +115,14 @@ export default function ReadingsPage() {
                     <td className="border border-gray-300 px-4 py-2 min-h-[48px]">{book.Author}</td>
                     <td className="border border-gray-300 px-4 py-2 min-h-[48px]">{book.Date_Added}</td>
                     <td
-                      className={`border border-gray-300 px-4 py-2 font-medium min-h-[48px] ${parseInt(book.Read_Count) > 0 ? "text-green-600" : "text-red-600"
-                        }`}
+                      className={`border border-gray-300 px-4 py-2 font-medium min-h-[48px] ${
+                        parseInt(book.Read_Count) > 0 ? "text-green-600" : "text-red-600"
+                      }`}
                     >
                       {parseInt(book.Read_Count) > 0 ? "Read" : "Not Read"}
                     </td>
                     <td className="border border-gray-300 px-4 py-2 min-h-[48px]">
-                      {franc(book.Title)} 
+                      {franc(book.Title)}
                     </td>
                   </tr>
                 ))
@@ -143,10 +144,11 @@ export default function ReadingsPage() {
         {filteredBooks.length > 0 && (
           <div className="flex justify-between items-center mt-6 max-w-4xl mx-auto">
             <button
-              className={`px-4 py-2 rounded-md ${currentPage > 1
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+              className={`px-4 py-2 rounded-md ${
+                currentPage > 1
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
               disabled={currentPage <= 1}
               onClick={() => handlePageChange(currentPage - 1)}
             >
@@ -157,10 +159,11 @@ export default function ReadingsPage() {
               <span className="font-medium">{totalPages}</span>
             </p>
             <button
-              className={`px-4 py-2 rounded-md ${hasMore
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+              className={`px-4 py-2 rounded-md ${
+                hasMore
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
               disabled={!hasMore}
               onClick={() => handlePageChange(currentPage + 1)}
             >

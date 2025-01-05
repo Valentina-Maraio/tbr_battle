@@ -1,7 +1,7 @@
 'use client'; // Client-side component
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SignIn() {
@@ -9,6 +9,11 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isClient, setIsClient] = useState(false); // State to track if the component is rendered on the client side
+
+  useEffect(() => {
+    setIsClient(true); // This will be true only on the client side
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +30,9 @@ export default function SignIn() {
       router.push("/dashboard"); // Redirect to a secure page after successful login
     }
   };
+
+  // Only render the component if it's on the client side to avoid hydration issues
+  if (!isClient) return null;
 
   return (
     <div>
