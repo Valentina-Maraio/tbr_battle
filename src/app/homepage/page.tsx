@@ -120,16 +120,6 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
                       </div>
                       <span className="text-sm">Shared</span>
                     </Link>
-                    <Link
-                      href="/goals"
-                      className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
-                      onClick={closeSidebar}
-                    >
-                      <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
-                        <i className="fa-solid fa-trophy"></i>
-                      </div>
-                      <span className="text-sm">Goals</span>
-                    </Link>
                   </div>
                 </div>
 

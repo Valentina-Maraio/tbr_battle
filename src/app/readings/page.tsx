@@ -1,15 +1,13 @@
-'use client'
+'use client';
 
 import { franc } from "franc-min";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import HomePage from "../homepage/page";
-import { useFavorite } from "../context/ReadingContext";
 
 // Constants
 const ITEMS_PER_BATCH = 5;
 
 export default function ReadingsPage() {
-  const { addFavorite } = useFavorite();
   const [books, setBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [displayedBooks, setDisplayedBooks] = useState<any[]>([]);
@@ -17,6 +15,7 @@ export default function ReadingsPage() {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [language, setLanguage] = useState<string>("");
   const [bookStatuses, setBookStatuses] = useState<{ [key: string]: string }>({});
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
 
   useEffect(() => {
     async function loadBooks() {
@@ -41,18 +40,7 @@ export default function ReadingsPage() {
     loadBooks();
   }, []);
 
-  useEffect(() => {
-    // Listen for changes in bookStatuses and add to favorites when a book's status is "Reading"
-    const booksToAdd = Object.keys(bookStatuses).filter((bookId) => bookStatuses[bookId] === "Reading");
-    booksToAdd.forEach((bookId) => {
-      const book = books.find((book) => book.Book_Id === bookId);
-      if (book) {
-        addFavorite(book);
-      }
-    });
-  }, [bookStatuses, books, addFavorite]);
-
-  const toggleStatus = (bookId: string, book: any) => {
+  const toggleStatus = (bookId: string) => {
     setBookStatuses((prevStatuses) => {
       const currentStatus = prevStatuses[bookId];
       let newStatus = "Not Read";
@@ -61,10 +49,10 @@ export default function ReadingsPage() {
       } else if (currentStatus === "Reading") {
         newStatus = "Read";
       }
-      
+
       // Store the status in localStorage to persist
       localStorage.setItem(bookId, newStatus);
-      
+
       return {
         ...prevStatuses,
         [bookId]: newStatus,
@@ -79,12 +67,16 @@ export default function ReadingsPage() {
     }
   }, [searchQuery]);
 
-  const filteredBooks = books.filter(
-    (book) =>
-      (book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.Author.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (language ? book.Language === language : true)
-  );
+  // Memoize the filteredBooks calculation
+  const filteredBooks = useMemo(() => {
+    return books.filter(
+      (book) =>
+        (book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          book.Author.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        (language ? book.Language === language : true) &&
+        (selectedStatus ? bookStatuses[book.Book_Id] === selectedStatus : true)
+    );
+  }, [books, searchQuery, language, selectedStatus, bookStatuses]);
 
   const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_BATCH);
 
@@ -96,13 +88,18 @@ export default function ReadingsPage() {
     setHasMore(page < totalPages);
   };
 
+  useEffect(() => {
+    setDisplayedBooks(filteredBooks.slice(0, ITEMS_PER_BATCH));
+    setHasMore(filteredBooks.length > ITEMS_PER_BATCH);
+  }, [filteredBooks]);
+
   return (
     <HomePage>
       <div className="p-6">
         <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
-        
+
         {/* Search Bar */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-4">
           <div className="w-full max-w-4xl flex items-center bg-gray-100 shadow-lg rounded-lg p-4">
             <input
               type="text"
@@ -112,8 +109,6 @@ export default function ReadingsPage() {
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
-                setDisplayedBooks(filteredBooks.slice(0, ITEMS_PER_BATCH));
-                setHasMore(filteredBooks.length > ITEMS_PER_BATCH);
               }}
             />
             <button
@@ -128,46 +123,51 @@ export default function ReadingsPage() {
           </div>
         </div>
 
-        {/* Language Display */}
-        {language && (
-          <div className="text-center mb-4">
-            <span className="font-medium text-lg text-gray-700">
-              Detected Language: {language}
-            </span>
-          </div>
-        )}
+        {/* Status Filter */}
+        <div className="flex justify-center mb-8">
+          <select
+            className="px-4 py-2 border border-gray-300 rounded-lg"
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+          >
+            <option value="">All Statuses</option>
+            <option value="Read">Read</option>
+            <option value="Reading">Reading</option>
+            <option value="Not Read">Not Read</option>
+          </select>
+        </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full max-w-4xl mx-auto border-collapse border border-gray-200">
             <thead>
               <tr className="bg-gray-100">
-                <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Title</th>
-                <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Author</th>
-                <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Date Added</th>
-                <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Status</th>
-                <th className="border border-gray-300 px-4 py-2 text-left min-h-[48px]">Detected Language</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Title</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Author</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Date Added</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Detected Language</th>
               </tr>
             </thead>
             <tbody>
               {displayedBooks.length > 0 ? (
                 displayedBooks.map((book) => (
                   <tr key={book.Book_Id} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-2 min-h-[48px]">{book.Title}</td>
-                    <td className="border border-gray-300 px-4 py-2 min-h-[48px]">{book.Author}</td>
-                    <td className="border border-gray-300 px-4 py-2 min-h-[48px]">{book.Date_Added}</td>
+                    <td className="border border-gray-300 px-4 py-2">{book.Title}</td>
+                    <td className="border border-gray-300 px-4 py-2">{book.Author}</td>
+                    <td className="border border-gray-300 px-4 py-2">{book.Date_Added}</td>
                     <td
-                      onClick={() => toggleStatus(book.Book_Id, book)} // Pass both bookId and book
-                      className={`border border-gray-300 px-4 py-2 font-medium min-h-[48px] cursor-pointer ${bookStatuses[book.Book_Id] === "Read"
-                          ? "text-green-600"
-                          : bookStatuses[book.Book_Id] === "Reading"
-                            ? "text-yellow-600"
-                            : "text-red-600"
+                      onClick={() => toggleStatus(book.Book_Id)}
+                      className={`border border-gray-300 px-4 py-2 font-medium cursor-pointer ${bookStatuses[book.Book_Id] === "Read"
+                        ? "text-green-600"
+                        : bookStatuses[book.Book_Id] === "Reading"
+                          ? "text-yellow-600"
+                          : "text-red-600"
                         }`}
                     >
                       {bookStatuses[book.Book_Id]}
                     </td>
-                    <td className="border border-gray-300 px-4 py-2 min-h-[48px]">
+                    <td className="border border-gray-300 px-4 py-2">
                       {franc(book.Title)}
                     </td>
                   </tr>
@@ -175,10 +175,10 @@ export default function ReadingsPage() {
               ) : (
                 <tr>
                   <td
-                    colSpan={4}
-                    className="border border-gray-300 px-4 py-2 text-center text-gray-500 min-h-[48px]"
+                    colSpan={5}
+                    className="border border-gray-300 px-4 py-2 text-center text-gray-500"
                   >
-                    No books found. Try adjusting your search.
+                    No books found. Try adjusting your search or filter.
                   </td>
                 </tr>
               )}
@@ -191,8 +191,8 @@ export default function ReadingsPage() {
           <div className="flex justify-between items-center mt-6 max-w-4xl mx-auto">
             <button
               className={`px-4 py-2 rounded-md ${currentPage > 1
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               disabled={currentPage <= 1}
               onClick={() => handlePageChange(currentPage - 1)}
@@ -205,8 +205,8 @@ export default function ReadingsPage() {
             </p>
             <button
               className={`px-4 py-2 rounded-md ${hasMore
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               disabled={!hasMore}
               onClick={() => handlePageChange(currentPage + 1)}
