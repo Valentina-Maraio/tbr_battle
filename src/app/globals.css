@@ -4,27 +4,27 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
 :root {
-  --background: #FCF8F3;      /* Soft, off-white */
-  --text: #4B4B4B;            /* Cool grey text */
-  --primary: #D7C7A3;         /* Warm taupe */
-  --secondary: #9D9C9C;       /* Light grey-brown */
-  --accent: #D6A2A1;          /* Soft coral */
+  --background: #F8FAFC;      /* Soft white with a subtle blue undertone */
+  --text: #2E2E2E;            /* Neutral dark grey */
+  --primary: #90CAF9;         /* Light sky blue */
+  --secondary: #B0BEC5;       /* Soft cool grey */
+  --accent: #FFCDD2;          /* Gentle pastel pink */
 }
 
 .theme-dark {
-  --background: #404040;      /* Dark grey background */
-  --text:rgb(108, 99, 79);            /* Same as border color - warm taupe */
-  --primary: #D7C7A3;         /* Warm taupe */
-  --secondary: #9D9C9C;       /* Light grey-brown */
-  --accent: #D6A2A1;          /* Soft coral */
+  --background: #1C1C1E;      /* Very dark blue-grey */
+  --text: #E8E8E8;            /* Soft white */
+  --primary: #64B5F6;         /* Bright medium blue */
+  --secondary: #90A4AE;       /* Muted steel grey */
+  --accent: #F48FB1;          /* Muted pink */
 }
 
 .theme-middle {
-  --background: #F1F8FF;      /* Soft pale blue */
-  --text: #3C3C3C;            /* Dark grey text */
-  --primary: #9C9A9A;         /* Light grey-taupe */
-  --secondary: #C8C7C7;       /* Soft grey */
-  --accent: #D6A2A1;          /* Soft coral */
+  --background: #E3F2FD;      /* Pale blue */
+  --text: #37474F;            /* Deep charcoal grey */
+  --primary: #81D4FA;         /* Bright aqua blue */
+  --secondary: #B0BEC5;       /* Neutral cool grey */
+  --accent: #CE93D8;          /* Soft lavender */
 }
 
 html,
