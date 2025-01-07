@@ -1,17 +1,14 @@
 describe('HomePage', () => {
     beforeEach(() => {
-      // Mock the user authentication and open the page
-<<<<<<< HEAD
-      cy.visit('/src/app/homepage'); // Visit the homepage (or any other appropriate route)
-=======
+      cy.viewport(1280, 800);
       cy.visit('/'); // Visit the homepage (or any other appropriate route)
->>>>>>> e1efacb (cypress test)
     });
   
     it('displays the sidebar correctly', () => {
       // Verify the sidebar is visible
-      cy.get('nav').should('exist');
-      cy.get('nav').should('have.class', 'lg:relative'); // Ensure sidebar class is present
+      cy.wait(500);
+      cy.get('nav').should('exist').and('be.visible');
+      cy.get('nav').should('have.class', 'lg:relative').and('exist');// Ensure sidebar class is present
   
       // Check that the sidebar has the correct links
       cy.get('a[href="/dashboard"]').should('exist').and('contain.text', 'Dashboard');
