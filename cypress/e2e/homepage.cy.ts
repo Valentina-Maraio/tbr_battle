@@ -1,7 +1,11 @@
 describe('HomePage', () => {
     beforeEach(() => {
       // Mock the user authentication and open the page
+<<<<<<< HEAD
       cy.visit('/src/app/homepage'); // Visit the homepage (or any other appropriate route)
+=======
+      cy.visit('/'); // Visit the homepage (or any other appropriate route)
+>>>>>>> e1efacb (cypress test)
     });
   
     it('displays the sidebar correctly', () => {

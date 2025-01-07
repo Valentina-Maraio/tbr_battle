@@ -102,6 +102,7 @@ To start the development server, run:
 ```bash
 npm run dev
 
+<<<<<<< HEAD
 ### Usage
 
 Once the app is running, you will see a dashboard displaying books with the following functionality:
@@ -130,6 +131,38 @@ This project uses **Cypress** for end-to-end testing. To run the tests:
     npx cypress open
     ```
 
+=======
+````
+
+### Usage
+
+Once the app is running, you will see a dashboard displaying books with the following functionality:
+
+- **Search Bar**: Filter books by title or author.
+- **Status Filter Dropdown**: Filter books based on their status (e.g., Read, Reading, Not Read).
+- **Books Table**: Display book details such as title, author, and publisher.
+- **Pie Chart**: Visualize the distribution of books by publisher.
+- **Pagination Controls**: Navigate through the list of books.
+
+### Book Status Management
+
+Click on the status of a book (e.g., "Not Read", "Reading", or "Read") to toggle between these statuses. The status is persisted in **localStorage** so that the status persists even after a page reload.
+
+## Testing
+
+This project uses **Cypress** for end-to-end testing. To run the tests:
+
+1. Install Cypress if you haven’t already:
+    ```bash
+    npm install cypress --save-dev
+    ```
+
+2. Open Cypress:
+    ```bash
+    npx cypress open
+    ```
+
+>>>>>>> e1efacb (cypress test)
 3. Run the tests in the Cypress UI that opens.
 
 This README file includes:

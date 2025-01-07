@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const handler = NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -29,7 +29,11 @@ export const handler = NextAuth({
   session: {
     strategy: "jwt", // Use JWT for session handling
   },
-});
+};
+
+// Export GET and POST handlers for the route
+export const GET = NextAuth(authOptions);
+export const POST = NextAuth(authOptions);
 
 async function verifyUser(email, password) {
   // Replace this with your real authentication logic
@@ -38,5 +42,3 @@ async function verifyUser(email, password) {
   }
   return null;
 }
-
-export { handler as GET, handler as POST };

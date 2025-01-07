@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
       style={{ backdropFilter: 'blur(5px)' }} // Optional: Adds blur effect to the background
     >
@@ -78,95 +78,96 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-      <ProtectedRoute>
-            <div className="flex min-h-screen" style={{ backgroundColor: 'var(--background)', color: 'var(--text)' }}>
-              {/* Sidebar */}
-              <nav
-                style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}
-                className={`fixed lg:relative top-0 left-0 bottom-0 z-20 transform lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-                  } transition-transform duration-300 w-64 p-4 flex flex-col justify-between max-h-screen overflow-y-auto`}
+    <ProtectedRoute>
+      <div className="flex min-h-screen" style={{ backgroundColor: 'var(--background)', color: 'var(--text)' }}>
+        {/* Sidebar */}
+        <nav
+          style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}
+          className={`fixed lg:relative top-0 left-0 bottom-0 z-20 transform lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            } transition-transform duration-300 w-64 p-4 flex flex-col justify-between max-h-screen overflow-y-auto`}
+        >
+          {/* Top Section */}
+          <div>
+            <h2 className="text-lg font-bold mb-6">TBR Battle</h2>
+            <div className="grid grid-cols-2 gap-8 mb-6">
+              <Link
+                href="/dashboard"
+                className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
+                onClick={closeSidebar}
               >
-                {/* Top Section */}
-                <div>
-                  <h2 className="text-lg font-bold mb-6">TBR Battle</h2>
-                  <div className="grid grid-cols-2 gap-8 mb-6">
-                    <Link
-                      href="/dashboard"
-                      className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
-                      onClick={closeSidebar}
-                    >
-                      <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
-                        <i className="fa-solid fa-chart-line"></i>
-                      </div>
-                      <span className="text-sm">Dashboard</span>
-                    </Link>
-                    <Link
-                      href="/readings"
-                      className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
-                      onClick={closeSidebar}
-                    >
-                      <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
-                        <i className="fa-solid fa-glasses"></i>
-                      </div>
-                      <span className="text-sm">Readings</span>
-                    </Link>
-                    <Link
-                      href="/shared_books"
-                      className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
-                      onClick={closeSidebar}
-                    >
-                      <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
-                        <i className="fa-solid fa-people-group"></i>
-                      </div>
-                      <span className="text-sm">Shared</span>
-                    </Link>
-                  </div>
+                <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
+                  <i className="fa-solid fa-chart-line"></i>
                 </div>
-
-                {/* Bottom Section */}
-                <div className="mt-4 flex space-x-4 items-center">
-                  <button
-                    style={{ color: 'var(--background)' }}
-                    className="p-4 rounded-full hover:opacity-80"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    <i className="fa-solid fa-gear"></i>
-                  </button>
-                  <button style={{ color: 'var(--background)' }} className="p-4 rounded-full hover:opacity-80">
-                    <i className="fas fa-user"></i>
-                  </button>
-                  <ThemeSelector />
+                <span className="text-sm">Dashboard</span>
+              </Link>
+              <Link
+                href="/readings"
+                className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
+                onClick={closeSidebar}
+              >
+                <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
+                  <i className="fa-solid fa-glasses"></i>
                 </div>
-              </nav>
-
-              {/* Main Content */}
-              <div className="flex-1 flex flex-col">
-                {/* Top Bar */}
-                <div className="w-full p-4 flex items-center justify-between fixed top-0 z-10" style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}>
-                  {/* Mobile Menu Button */}
-                  <button
-                    className="lg:hidden hover:opacity-80"
-                    onClick={toggleSidebar}
-                  >
-                    <i className="fas fa-bars"></i>
-                  </button>
+                <span className="text-sm">Readings</span>
+              </Link>
+              <Link
+                href="/shared_books"
+                className="flex flex-col items-center justify-center text-center p-4 space-y-2 hover:underline"
+                onClick={closeSidebar}
+              >
+                <div style={{ borderColor: 'var(--accent)' }} className="w-16 h-16 flex items-center justify-center border-2 rounded-lg">
+                  <i className="fa-solid fa-people-group"></i>
                 </div>
-
-                {/* Content Area */}
-                <main
-                  className="flex-1 p-8 overflow-y-auto mt-[64px]"
-                  style={{
-                    marginLeft: isSidebarOpen ? '16rem' : '0',
-                    transition: 'margin-left 0.3s ease',
-                  }}
-                >
-                  {children}
-                </main>
-              </div>
+                <span className="text-sm">Shared</span>
+              </Link>
             </div>
+          </div>
 
-            {/* Modal */}
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={user} />
-      </ProtectedRoute>
+          {/* Bottom Section */}
+          <div className="mt-4 flex space-x-4 items-center">
+            <button
+              style={{ color: 'var(--background)' }}
+              className="p-4 rounded-full hover:opacity-80"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <i className="fa-solid fa-gear"></i>
+            </button>
+            <button style={{ color: 'var(--background)' }} className="p-4 rounded-full hover:opacity-80">
+              <i className="fas fa-user"></i>
+            </button>
+            <ThemeSelector />
+          </div>
+        </nav>
+
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col">
+          {/* Top Bar */}
+          <div className="w-full p-4 flex items-center justify-between fixed top-0 z-10" style={{ backgroundColor: 'var(--primary)', color: 'var(--background)' }}>
+            {/* Mobile Menu Button */}
+            <button
+              aria-label="Toggle Sidebar"
+              className="lg:hidden hover:opacity-80"
+              onClick={toggleSidebar}
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+          </div>
+
+          {/* Content Area */}
+          <main
+            className="flex-1 p-8 overflow-y-auto mt-[64px]"
+            style={{
+              marginLeft: isSidebarOpen ? '16rem' : '0',
+              transition: 'margin-left 0.3s ease',
+            }}
+          >
+            {children}
+          </main>
+        </div>
+      </div>
+
+      {/* Modal */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={user} />
+    </ProtectedRoute>
   );
 }
